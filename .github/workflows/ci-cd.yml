@@ -59,7 +59,7 @@ jobs:
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: $TAILSCALE_SERVER_IP
+          host: 100.72.100.119
           username: server-1
           password: ninja
           port: 22
