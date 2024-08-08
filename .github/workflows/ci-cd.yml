@@ -29,7 +29,7 @@ jobs:
 
       - name: Test the application
         run: |
-          podman run --rm haircut:postgres /myapp --version
+          podman run --rm haircut:postgres /haircut-app --version
 
       - name: Push to Docker Hub
         run: |
