@@ -68,9 +68,16 @@ jobs:
             # Pull the latest image
             podman pull docker.io/balinux/haircut:postgres
 
-            # Stop the currently running container (if any)
-            podman stop haircut-postgres-ga || true
-            podman rm haircut-postgres-ga || true
+            # jalankan tahap ini untuk pertama kali deploy container
+            # atau jika tidak menggunakan systemd
 
-            # Run the new container
-            podman run -d --name haircut-postgres-ga -p 8886:8888 docker.io/balinux/haircut:postgres
+            # # Stop the currently running container (if any)
+            #
+            # podman stop haircut-postgres-ga || true
+            # podman rm haircut-postgres-ga || true
+            #
+            # # Run the new container
+            # podman run -d --name haircut-postgres-ga -p 8886:8888 docker.io/balinux/haircut:postgres
+
+            # cukup jalankan ini jika mengguakan podman di systemd
+            systemctl --user restart container-haircut-postgres-ga.service
