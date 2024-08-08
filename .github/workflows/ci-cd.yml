@@ -23,19 +23,19 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build the Docker image
-        run: |
-          podman build -t haircut:postgres .
-
-      - name: Test the application
-        run: |
-          echo "remove test, do it if you want"
-          # podman run --rm haircut:postgres /haircut-app --version
-
-      - name: Push to Docker Hub
-        run: |
-          podman tag haircut:postgres docker.io/${{ secrets.DOCKER_USERNAME }}/haircut:postgres
-          podman push docker.io/${{ secrets.DOCKER_USERNAME }}/haircut:postgres
+      # - name: Build the Docker image
+      #   run: |
+      #     podman build -t haircut:postgres .
+      #
+      # - name: Test the application
+      #   run: |
+      #     echo "remove test, do it if you want"
+      #     # podman run --rm haircut:postgres /haircut-app --version
+      #
+      # - name: Push to Docker Hub
+      #   run: |
+      #     podman tag haircut:postgres docker.io/${{ secrets.DOCKER_USERNAME }}/haircut:postgres
+      #     podman push docker.io/${{ secrets.DOCKER_USERNAME }}/haircut:postgres
 
   deploy:
     runs-on: ubuntu-latest
