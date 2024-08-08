@@ -56,19 +56,30 @@ jobs:
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
           tags: tag:ci
 
-      - name: Setup SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H $TAILSCALE_SERVER_IP >> ~/.ssh/known_hosts
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: $TAILSCALE_SERVER_IP
+          username: server-1
+          password: ninja
+          port: 22
+          script: |
+            whoami
+            ls -al
 
-      - name: Debug SSH Configuration
-        run: |
-          ls -l ~/.ssh
-          cat ~/.ssh/id_rsa
-          cat ~/.ssh/known_hosts
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no server-1@${TAILSCALE_SERVER_IP} 'echo SSH connection successful'
+      # - name: Setup SSH
+      #   run: |
+      #     mkdir -p ~/.ssh
+      #     echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+      #     chmod 600 ~/.ssh/id_rsa
+      #     ssh-keyscan -H $TAILSCALE_SERVER_IP >> ~/.ssh/known_hosts
+
+      # - name: Debug SSH Configuration
+      #   run: |
+      #     ls -l ~/.ssh
+      #     cat ~/.ssh/id_rsa
+      #     cat ~/.ssh/known_hosts
+      #     ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no server-1@${TAILSCALE_SERVER_IP} 'echo SSH connection successful'
 
       # - name: Deploy to server
       #   env:
