@@ -68,22 +68,22 @@ jobs:
           ls -l ~/.ssh
           cat ~/.ssh/id_rsa
           cat ~/.ssh/known_hosts
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no server-1@${TAILSCALE_SERVER_IP} 'echo SSH connection successful'
+          # ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no server-1@${TAILSCALE_SERVER_IP} 'echo SSH connection successful'
 
-      - name: Deploy to server
-        env:
-          # PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          TAILSCALE_SERVER_IP: 100.72.100.119 # Ganti dengan IP Tailscale server Anda
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        run: |
-          echo "Deploying to server..."
-          echo "$PWD"
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no server-1@${TAILSCALE_SERVER_IP} 'bash -s' < deploy_script.sh
-          # # Setup SSH
-          # mkdir -p ~/.ssh
-          # echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          # chmod 600 ~/.ssh/id_rsa
-          # ssh-keyscan -H $TAILSCALE_SERVER_IP >> ~/.ssh/known_hosts
-          #
-          # # Deploy using SSH
-          # ssh -i ~/.ssh/id_rsa server-1@${TAILSCALE_SERVER_IP} 'bash -s' < deploy_script.sh
+      # - name: Deploy to server
+      #   env:
+      #     # PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     TAILSCALE_SERVER_IP: 100.72.100.119 # Ganti dengan IP Tailscale server Anda
+      #     SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      #   run: |
+      #     echo "Deploying to server..."
+      #     echo "$PWD"
+      #     ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no server-1@${TAILSCALE_SERVER_IP} 'bash -s' < deploy_script.sh
+      #     # # Setup SSH
+      #     # mkdir -p ~/.ssh
+      #     # echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+      #     # chmod 600 ~/.ssh/id_rsa
+      #     # ssh-keyscan -H $TAILSCALE_SERVER_IP >> ~/.ssh/known_hosts
+      #     #
+      #     # # Deploy using SSH
+      #     # ssh -i ~/.ssh/id_rsa server-1@${TAILSCALE_SERVER_IP} 'bash -s' < deploy_script.sh
