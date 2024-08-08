@@ -60,9 +60,11 @@ jobs:
         run: |
           echo "Deploying to server..."
           echo "$PWD"
+          # Setup SSH
+          mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H $TAILSCALE_SERVER_IP >> ~/.ssh/known_hosts
 
           # Deploy using SSH
-          ssh -i ~/.ssh/id_rsa user@${TAILSCALE_SERVER_IP} 'bash -s' < deploy_script.sh
+          ssh -i ~/.ssh/id_rsa user@${TAILSCALE_SERVER_IP} 'bash -s' < deploy_script.shssh/id_rsa user@${TAILSCALE_SERVER_IP} 'bash -s' < deploy_script.sh
