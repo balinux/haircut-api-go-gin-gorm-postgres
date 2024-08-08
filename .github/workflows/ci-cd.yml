@@ -23,19 +23,19 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # - name: Build the Docker image
-      #   run: |
-      #     podman build -t haircut:postgres .
-      #
-      # - name: Test the application
-      #   run: |
-      #     echo "remove test, do it if you want"
-      #     # podman run --rm haircut:postgres /haircut-app --version
-      #
-      # - name: Push to Docker Hub
-      #   run: |
-      #     podman tag haircut:postgres docker.io/${{ secrets.DOCKER_USERNAME }}/haircut:postgres
-      #     podman push docker.io/${{ secrets.DOCKER_USERNAME }}/haircut:postgres
+      - name: Build the Docker image
+        run: |
+          podman build -t haircut:postgres .
+
+      - name: Test the application
+        run: |
+          echo "remove test, do it if you want"
+          # podman run --rm haircut:postgres /haircut-app --version
+
+      - name: Push to Docker Hub
+        run: |
+          podman tag haircut:postgres docker.io/${{ secrets.DOCKER_USERNAME }}/haircut:postgres
+          podman push docker.io/${{ secrets.DOCKER_USERNAME }}/haircut:postgres
 
   deploy:
     runs-on: ubuntu-latest
@@ -54,12 +54,15 @@ jobs:
 
       - name: Deploy to server
         env:
-          PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          # PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          TAILSCALE_SERVER_IP: 100.72.100.119 # Ganti dengan IP Tailscale server Anda
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           echo "Deploying to server..."
           echo "$PWD"
-          # mkdir -p ~/.ssh
-          # echo "$PRIVATE_KEY" > ~/.ssh/id_rsa
-          # chmod 600 ~/.ssh/id_rsa
-          # ssh-keyscan -H myserver.com >> ~/.ssh/known_hosts
-          # ssh -i ~/.ssh/id_rsa user@myserver.com 'bash -s' < deploy_script.sh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H $TAILSCALE_SERVER_IP >> ~/.ssh/known_hosts
+
+          # Deploy using SSH
+          ssh -i ~/.ssh/id_rsa user@${TAILSCALE_SERVER_IP} 'bash -s' < deploy_script.sh
