@@ -64,8 +64,11 @@ jobs:
           password: ninja
           port: 22
           script: |
-            whoami
-            ls -al
+            echo "Deploying script to remote server..."
+            mkdir -p ~/deploy
+            echo "$GITHUB_WORKSPACE/deploy_script.sh" > ~/deploy/deploy_script.sh
+            chmod +x ~/deploy/deploy_script.sh
+            ~/deploy/deploy_script.sh
 
       # - name: Setup SSH
       #   run: |
