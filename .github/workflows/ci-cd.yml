@@ -67,4 +67,4 @@ jobs:
           ssh-keyscan -H $TAILSCALE_SERVER_IP >> ~/.ssh/known_hosts
 
           # Deploy using SSH
-          ssh -i ~/.ssh/id_rsa user@${TAILSCALE_SERVER_IP} 'bash -s' < deploy_script.shssh/id_rsa user@${TAILSCALE_SERVER_IP} 'bash -s' < deploy_script.sh
+          ssh -i ~/.ssh/id_rsa user@${TAILSCALE_SERVER_IP} 'bash -s' < deploy_script.sh
