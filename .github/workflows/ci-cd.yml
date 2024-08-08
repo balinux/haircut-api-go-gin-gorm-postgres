@@ -48,13 +48,16 @@ jobs:
       - name: Tailscale
         uses: tailscale/github-action@v2
         with:
-          authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:ci
 
       - name: Deploy to server
         env:
           PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           echo "Deploying to server..."
+          echo "$PWD"
           # mkdir -p ~/.ssh
           # echo "$PRIVATE_KEY" > ~/.ssh/id_rsa
           # chmod 600 ~/.ssh/id_rsa
