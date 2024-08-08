@@ -25,16 +25,16 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          podman build -t myapp:latest .
+          podman build -t haircut:postgres .
 
       - name: Test the application
         run: |
-          podman run --rm myapp:latest /myapp --version
+          podman run --rm haircut:postgres /myapp --version
 
       - name: Push to Docker Hub
         run: |
-          podman tag myapp:latest docker.io/${{ secrets.DOCKER_USERNAME }}/myapp:latest
-          podman push docker.io/${{ secrets.DOCKER_USERNAME }}/myapp:latest
+          podman tag haircut:postgres docker.io/${{ secrets.DOCKER_USERNAME }}/haircut:postgres
+          podman push docker.io/${{ secrets.DOCKER_USERNAME }}/haircut:postgres
 
   deploy:
     runs-on: ubuntu-latest
