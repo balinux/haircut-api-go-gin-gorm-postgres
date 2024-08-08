@@ -68,7 +68,7 @@ jobs:
           ls -l ~/.ssh
           cat ~/.ssh/id_rsa
           cat ~/.ssh/known_hosts
-          # ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no server-1@${TAILSCALE_SERVER_IP} 'echo SSH connection successful'
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no server-1@${TAILSCALE_SERVER_IP} 'echo SSH connection successful'
 
       # - name: Deploy to server
       #   env:
