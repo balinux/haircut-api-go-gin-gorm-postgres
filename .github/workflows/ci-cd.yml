@@ -65,10 +65,15 @@ jobs:
           port: 22
           script: |
             echo "Deploying script to remote server..."
-            mkdir -p ~/deploy
-            echo "$GITHUB_WORKSPACE/deploy_script.sh" > ~/deploy/deploy_script.sh
-            chmod +x ~/deploy/deploy_script.sh
-            ~/deploy/deploy_script.sh
+            # Pull the latest image
+            podman pull docker.io/balinux/haircut:postgres
+
+            # Stop the currently running container (if any)
+            podman stop myapp || true
+            podman rm myapp || true
+
+            # Run the new container
+            podman run -d --name myapp -p 8886:8888 docker.io/balinux/haircut:postgres
 
       # - name: Setup SSH
       #   run: |
